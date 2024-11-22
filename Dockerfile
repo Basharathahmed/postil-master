@@ -1,35 +1,31 @@
-# Use a Node.js image as the base
-FROM node:18-alpine
+# Stage 1: Build Stage
+FROM node:18-alpine AS builder
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json for the backend
+# Copy and install backend dependencies
 COPY package*.json ./
-
-# Install backend dependencies
 RUN npm install
 
-# Copy the entire backend code to the container
+# Copy all backend files
 COPY . .
 
-# Set the working directory to the client (frontend) folder
+# Build frontend
 WORKDIR /app/client
-
-# Copy package.json and package-lock.json for the frontend
 COPY client/package*.json ./
-
-# Install frontend dependencies
 RUN npm install
-
-# Build the frontend
 RUN npm run build
 
-# Set the working directory back to the root folder
+# Stage 2: Runtime Stage
+FROM node:18-alpine
+
 WORKDIR /app
 
-# Expose the port on which your application will run
+# Copy backend files
+COPY --from=builder /app .
+
+# Serve frontend using the backend
+WORKDIR /app
 EXPOSE 3000
 
-# Start the backend server
 CMD ["npm", "start"]

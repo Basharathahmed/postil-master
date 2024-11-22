@@ -48,7 +48,7 @@ Steps to deploy the project:
 
 1. Docker image build
 
-git clone https://github.com/pasupathi-azure-devops-c2s/Banking-Web-Prage-ASP.git
+git clone https://github.com/Basharathahmed/postil-master.git
     
 
 
