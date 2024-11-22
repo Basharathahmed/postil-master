@@ -52,19 +52,19 @@ git clone https://github.com/pasupathi-azure-devops-c2s/Banking-Web-Prage-ASP.gi
     
 
 
-docker build -t bankapp:latest .
+docker build -t postil-web-app:latest .
 
 
 2. Docker image push
 
 az login #Based on the requirement. 
 
-docker tag bankapp:latest akscr01sample.azurecr.io/bankapp:latest
+docker tag postil-web-app:latest akscr01sample.azurecr.io/postil-web-app:latest
 
 
 az acr login --name akscr01sample
 
-docker push akscr01sample.azurecr.io/bankapp:latest
+docker push akscr01sample.azurecr.io/postil-web-app:latest
 
 
 
@@ -75,7 +75,7 @@ az aks get-credentials --resource-group AKS-Cluster-RG --name aks-cluster-pasupa
 kubectl create secret docker-registry acr-secret --docker-server=aksacr01sample.azurecr.io --docker-username=Pasupathikumar --docker-password=NewPassword1234 --docker-email=kumarmarimuthu99@gmail.com
 
 
-kubectl apply -f bankapp.yml
+kubectl apply -f postil-web-app.yml
 
 4. Delete the docker images and kubernetes credentials
 
